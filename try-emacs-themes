@@ -4,7 +4,7 @@
   (expand-file-name "screenshots/emacs"))
 
 (defun make-screenshot (mode name)
-  (sit-for .1)
+  (sit-for 0)
   (shell-command (format "scrot -u %s/%s.png" screenshot-path name)))
 
 (defun try-theme (theme)
