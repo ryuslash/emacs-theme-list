@@ -44,7 +44,8 @@
 (defun try-themes (themes)
   (mapcar #'try-theme themes))
 
-(setq custom-theme-load-path load-path)
+(setq custom-theme-load-path
+      (append custom-theme-load-path load-path))
 
 (make-directory screenshot-path t)
 
