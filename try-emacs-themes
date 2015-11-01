@@ -1,16 +1,23 @@
 :;exec cask exec emacs -Q -l "$0" "$@" # -*- Emacs-Lisp -*-
 
 (defvar screenshot-path
-  (expand-file-name "screenshots/emacs"))
+  (expand-file-name "screenshots/emacs")
+  "The directory to save screenshots to.")
 
 (defvar modes-path
-  (expand-file-name "modes"))
+  (expand-file-name "modes")
+  "The directory where test mode files are located.")
 
 (defun find-test-modes ()
+  "Find all test mode files.
+
+This always includes nil, which indicates to use the *scratch*
+buffer to test a theme."
   (cons nil
         (directory-files modes-path nil "^[^.]")))
 
 (defun for-each-mode (func)
+  "Apply FUNC with each test mode file loaded."
   (mapcar
    (lambda (mode)
      (load-mode mode)
@@ -18,6 +25,7 @@
    (find-test-modes)))
 
 (defun load-mode (mode)
+  "Display MODE in the current buffer."
   (if mode
       (if (get-buffer mode)
           (switch-to-buffer mode)
@@ -26,6 +34,10 @@
   (sit-for 0.1))
 
 (defun make-screenshot (mode name)
+  "Take a screenshot of the current buffer.
+
+The resulting file is put in the `screenshot-path' and given a
+name that includes both MODE and NAME."
   (sit-for 0)
   (let ((mode (or mode "scratch")))
     (message "%s -- :)" name)
@@ -33,15 +45,18 @@
                            screenshot-path name mode))))
 
 (defun try-all-themes ()
+  "Go through all available themes and try them out."
   (try-themes (custom-available-themes)))
 
 (defun try-theme (theme)
+  "Try out THEME by making some screenshots of it."
   (load-theme theme :no-confirm)
   (for-each-mode
    (lambda (mode) (make-screenshot mode (symbol-name theme))))
   (disable-theme theme))
 
 (defun try-themes (themes)
+  "Go through THEMES and try them out."
   (mapcar #'try-theme themes))
 
 (setq custom-theme-load-path
