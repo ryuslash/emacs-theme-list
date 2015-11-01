@@ -28,7 +28,7 @@
 (defun make-screenshot (mode name)
   (sit-for 0)
   (let ((mode (or mode "scratch")))
-    (message ":)")
+    (message "%s -- :)" name)
     (shell-command (format "scrot -u %s/%s-%s.png"
                            screenshot-path name mode))))
 
