@@ -1,7 +1,7 @@
 :;exec cask exec emacs -Q -l "$0" "$@" # -*- Emacs-Lisp -*-
 
 (defvar screenshot-path
-  (expand-file-name "screenshots/emacs")
+  (expand-file-name "screenshots")
   "The directory to save screenshots to.")
 
 (defvar modes-path
@@ -39,10 +39,11 @@ buffer to test a theme."
 The resulting file is put in the `screenshot-path' and given a
 name that includes both MODE and NAME."
   (sit-for 0)
-  (let ((mode (or mode "scratch")))
+  (let ((mode (or mode "scratch"))
+        (dir (format "%s/%s" screenshot-path name)))
+    (make-directory dir :parents)
     (message "%s -- :)" name)
-    (shell-command (format "scrot -u %s/%s-%s.png"
-                           screenshot-path name mode))))
+    (shell-command (format "scrot -u %s/%s.png" dir mode))))
 
 (defun try-all-themes ()
   "Go through all available themes and try them out."
@@ -61,8 +62,6 @@ name that includes both MODE and NAME."
 
 (setq custom-theme-load-path
       (append custom-theme-load-path load-path))
-
-(make-directory screenshot-path t)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)

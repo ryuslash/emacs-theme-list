@@ -1,0 +1,12 @@
+# Site settings
+title: Emacs themes list
+description: > # this means to ignore newlines until "baseurl:"
+  Just one more list of Emacs themes.
+baseurl: "/emacs-theme-list" # the subpath of your site, e.g. /blog/
+url: "http://projects.ryuslash.org" # the base hostname & protocol for your site
+github_username:  ryuslash
+
+# Build settings
+markdown: kramdown
+
+exclude: ["Cask", "README.org", "try-emacs-themes", "modes", ".cask"]

@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<a href="{{ page.previous }}">Previous</a>
+<a href="{{ page.next }}" class="pull-right">Next</a>
+
+<h1>{{ page.title }}</h1>
+
+{% for mode in page.modes %}
+  <h2>{{ mode }}</h2>
+
+  <div class="theme-mode-preview">
+    <img src="../screenshots/{{ page.title }}/{{ mode }}.png"
+         alt="{{ mode }} in {{ page.title }}" />
+  </div>
+  <br />
+
+  {% unless forloop.last %}
+    <br />
+    <hr />
+  {% endunless %}
+{% endfor %}
+
+<a href="{{ page.previous }}">Previous</a>
+<a href="{{ page.next }}" class="pull-right">Next</a>

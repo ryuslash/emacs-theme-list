@@ -1,2 +1,5 @@
 screenshots/
 .cask/
+
+_site
+.sass-cache
