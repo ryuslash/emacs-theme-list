@@ -3,20 +3,46 @@
 (defvar screenshot-path
   (expand-file-name "screenshots/emacs"))
 
+(defvar modes-path
+  (expand-file-name "modes"))
+
+(defun find-test-modes ()
+  (cons nil
+        (directory-files modes-path nil "^[^.]")))
+
+(defun for-each-mode (func)
+  (mapcar
+   (lambda (mode)
+     (load-mode mode)
+     (funcall func mode))
+   (find-test-modes)))
+
+(defun load-mode (mode)
+  (if mode
+      (if (get-buffer mode)
+          (switch-to-buffer mode)
+        (find-file (format "%s/%s" modes-path mode)))
+    (switch-to-buffer "*scratch*"))
+  (sit-for 0.1))
+
 (defun make-screenshot (mode name)
   (sit-for 0)
-  (shell-command (format "scrot -u %s/%s.png" screenshot-path name)))
+  (let ((mode (or mode "scratch")))
+    (message ":)")
+    (shell-command (format "scrot -u %s/%s-%s.png"
+                           screenshot-path name mode))))
+
+(defun try-all-themes ()
+  (try-themes (custom-available-themes)))
 
 (defun try-theme (theme)
   (load-theme theme :no-confirm)
-  (make-screenshot nil (symbol-name theme))
+  (for-each-mode
+   (lambda (mode) (make-screenshot mode (symbol-name theme))))
   (disable-theme theme))
 
 (defun try-themes (themes)
   (mapcar #'try-theme themes))
-
-(defun try-all-themes ()
-  (try-themes (custom-available-themes)))
 
 (setq custom-theme-load-path load-path)
 

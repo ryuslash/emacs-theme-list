@@ -1,0 +1,10 @@
+;; -*- mode: emacs-lisp; -*-
+
+(defvar some-var "some string"
+  "some docstring")
+
+(defun some-function (arg1 &optional arg2 &rest arg3)
+  "some docstring"
+  (if arg2
+      (re-search-forward "^[^.]\\|\\(match\\)" nil :noerror)
+    (error "%s" arg3)))
