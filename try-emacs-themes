@@ -1,0 +1,33 @@
+:;exec cask exec emacs -Q -l "$0" "$@" # -*- Emacs-Lisp -*-
+
+(defvar screenshot-path
+  (expand-file-name "screenshots/emacs"))
+
+(defun make-screenshot (mode name)
+  (sit-for .1)
+  (shell-command (format "scrot -u %s/%s.png" screenshot-path name)))
+
+(defun try-theme (theme)
+  (load-theme theme :no-confirm)
+  (make-screenshot nil (symbol-name theme))
+  (disable-theme theme))
+
+(defun try-themes (themes)
+  (mapcar #'try-theme themes))
+
+(defun try-all-themes ()
+  (try-themes (custom-available-themes)))
+
+(make-directory screenshot-path t)
+
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+(set-frame-size (selected-frame) 80 24)
+
+(if command-line-args-left
+    (try-themes (mapcar #'intern command-line-args-left))
+  (try-all-themes))
+
+(kill-emacs)
