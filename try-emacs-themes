@@ -18,6 +18,8 @@
 (defun try-all-themes ()
   (try-themes (custom-available-themes)))
 
+(setq custom-theme-load-path load-path)
+
 (make-directory screenshot-path t)
 
 (tool-bar-mode -1)
