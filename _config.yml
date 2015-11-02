@@ -9,4 +9,4 @@ github_username:  ryuslash
 # Build settings
 markdown: kramdown
 
-exclude: ["Cask", "README.org", "try-emacs-themes", "modes", ".cask"]
+exclude: ["Cask", "try-emacs-themes", "modes", ".cask"]
