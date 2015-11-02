@@ -1,5 +1,7 @@
 :;exec cask exec emacs -Q -l "$0" "$@" # -*- Emacs-Lisp -*-
 
+(require 'cask)
+
 (defvar screenshot-path
   (expand-file-name "screenshots")
   "The directory to save screenshots to.")
@@ -59,6 +61,8 @@ name that includes both MODE and NAME."
 (defun try-themes (themes)
   "Go through THEMES and try them out."
   (mapcar #'try-theme themes))
+
+(cask-initialize)
 
 (setq custom-theme-load-path
       (append custom-theme-load-path load-path))
