@@ -71,7 +71,7 @@ name that includes both MODE and NAME."
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
-(set-frame-size (selected-frame) 80 24)
+(set-frame-size (selected-frame) 80 35)
 
 (if command-line-args-left
     (try-themes (mapcar #'intern command-line-args-left))
