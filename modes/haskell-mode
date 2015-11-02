@@ -1,0 +1,25 @@
+-- -*- mode: haskell; -*-
+module Main
+where
+
+import Data.Maybe
+import Data.Char
+import Control.Monad
+
+newtype Parser a = P (String -> [ (a, String) ])
+
+------------------------------------------------
+
+charFinder :: String -> Maybe Char
+charFinder (c:_) = Just c
+charFinder [] = Nothing
+
+singleChar :: Parser Char
+singleChar :: P $ \cs -> case cs of
+  (x:xs) -> [ (x, xs) ]
+  []     -> []
+
+parse :: Parser a -> String -> [ (a, String) ]
+parse (P p) s = p s
+
+-- An Either parser
