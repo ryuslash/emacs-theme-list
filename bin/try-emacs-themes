@@ -2,6 +2,10 @@
 
 (require 'cask)
 
+(defvar theme-blacklist
+  '(zonokai solarized moe hemisu apropospriate)
+  "Themes that should not be tried out.")
+
 (defvar screenshot-path
   (expand-file-name "screenshots")
   "The directory to save screenshots to.")
@@ -53,10 +57,11 @@ name that includes both MODE and NAME."
 
 (defun try-theme (theme)
   "Try out THEME by making some screenshots of it."
-  (load-theme theme :no-confirm)
-  (for-each-mode
-   (lambda (mode) (make-screenshot mode (symbol-name theme))))
-  (disable-theme theme))
+  (unless (member theme theme-blacklist)
+    (load-theme theme :no-confirm)
+    (for-each-mode
+     (lambda (mode) (make-screenshot mode (symbol-name theme))))
+    (disable-theme theme)))
 
 (defun try-themes (themes)
   "Go through THEMES and try them out."
