@@ -1,0 +1,85 @@
+:;exec cask exec emacs -Q -l "$0" "$@" # -*- Emacs-Lisp -*-
+
+(require 'cask)
+
+(defvar theme-blacklist
+  '(zonokai solarized moe hemisu apropospriate)
+  "Themes that should not be tried out.")
+
+(defvar screenshot-path
+  (expand-file-name "screenshots")
+  "The directory to save screenshots to.")
+
+(defvar modes-path
+  (expand-file-name "modes")
+  "The directory where test mode files are located.")
+
+(defun find-test-modes ()
+  "Find all test mode files.
+
+This always includes nil, which indicates to use the *scratch*
+buffer to test a theme."
+  (cons nil
+        (directory-files modes-path nil "^[^.]")))
+
+(defun for-each-mode (func)
+  "Apply FUNC with each test mode file loaded."
+  (mapcar
+   (lambda (mode)
+     (load-mode mode)
+     (funcall func mode))
+   (find-test-modes)))
+
+(defun load-mode (mode)
+  "Display MODE in the current buffer."
+  (if mode
+      (if (get-buffer mode)
+          (switch-to-buffer mode)
+        (find-file (format "%s/%s" modes-path mode)))
+    (switch-to-buffer "*scratch*"))
+  (sit-for 0.1))
+
+(defun make-screenshot (mode name)
+  "Take a screenshot of the current buffer.
+
+The resulting file is put in the `screenshot-path' and given a
+name that includes both MODE and NAME."
+  (sit-for 0)
+  (let ((mode (or mode "scratch"))
+        (dir (format "%s/%s" screenshot-path name)))
+    (make-directory dir :parents)
+    (message "%s -- :)" name)
+    (shell-command (format "scrot -u %s/%s.png" dir mode))))
+
+(defun try-all-themes ()
+  "Go through all available themes and try them out."
+  (try-themes (custom-available-themes)))
+
+(defun try-theme (theme)
+  "Try out THEME by making some screenshots of it."
+  (unless (member theme theme-blacklist)
+    (load-theme theme :no-confirm)
+    (for-each-mode
+     (lambda (mode) (make-screenshot mode (symbol-name theme))))
+    (disable-theme theme)))
+
+(defun try-themes (themes)
+  "Go through THEMES and try them out."
+  (mapcar #'try-theme themes))
+
+(cask-initialize)
+
+(setq custom-theme-load-path
+      (append custom-theme-load-path load-path))
+
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+(set-frame-size (selected-frame) 80 35)
+
+(if command-line-args-left
+    (try-themes (mapcar #'intern command-line-args-left))
+  (try-all-themes))
+
+(kill-emacs)
