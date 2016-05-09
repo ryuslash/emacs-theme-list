@@ -75,6 +75,7 @@
 (depends-on "jazz-theme")
 (depends-on "jbeans-theme")
 (depends-on "kooten-theme")
+(depends-on "labburn-theme")
 (depends-on "lavender-theme")
 ;; (depends-on "lenlen-theme") --- Won't install
 (depends-on "leuven-theme")
