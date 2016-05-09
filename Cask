@@ -33,6 +33,7 @@
 (depends-on "colorsarenice-theme")
 (depends-on "cyberpunk-theme")
 (depends-on "dakrone-theme")
+(depends-on "danneskjold-theme")
 (depends-on "darcula-theme")
 (depends-on "dark-krystal-theme")
 (depends-on "dark-mint-theme")
