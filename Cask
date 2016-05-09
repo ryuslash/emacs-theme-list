@@ -56,6 +56,7 @@
 (depends-on "flatui-theme")
 (depends-on "foggy-night-theme")
 (depends-on "gandalf-theme")
+(depends-on "goose-theme")
 (depends-on "gotham-theme")
 (depends-on "grandshell-theme")
 (depends-on "green-phosphor-theme")
