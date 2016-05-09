@@ -38,6 +38,7 @@
 (depends-on "dark-mint-theme")
 (depends-on "darkburn-theme")
 (depends-on "darkmine-theme")
+(depends-on "darkokai-theme")
 (depends-on "darktooth-theme")
 (depends-on "distinguished-theme")
 (depends-on "django-theme")
