@@ -80,6 +80,7 @@
 ;; (depends-on "lenlen-theme") --- Won't install
 (depends-on "leuven-theme")
 (depends-on "light-soap-theme")
+(depends-on "liso-theme")
 (depends-on "lush-theme")
 (depends-on "majapahit-theme")
 (depends-on "material-theme")
