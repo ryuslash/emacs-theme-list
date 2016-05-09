@@ -102,6 +102,7 @@
 (depends-on "oldlace-theme")
 (depends-on "omtose-phellack-theme")
 (depends-on "organic-green-theme")
+(depends-on "paganini-theme")
 (depends-on "paper-theme")
 (depends-on "pastelmac-theme")
 (depends-on "pastels-on-dark-theme")
